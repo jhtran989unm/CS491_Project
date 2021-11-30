@@ -93,6 +93,7 @@ function run_script() {
 		
 		matrix_dir=${matrix_dir_array[j]}
 		matrix_pm_path=${matrix_pm_path_array[j]}
+		
 		mkdir -p ${matrix_dir}
 		
 		cd ${matrix_dir}
@@ -111,7 +112,12 @@ function run_script() {
 			# ASSUMING C++ CODE
 			mpicxx -o ${program} ${code} -std=c++11
 	
-			cd ${up}${matrix_dir}${output}
+			#cd ${up}${matrix_dir}${output}
+			cd ${root}${matrix_dir}
+			
+			mkdir -p ${output}
+			
+			cd ${output}
 		
 			for bottleneck_dir in "${bottleneck_dir_array[@]}"
 			do
@@ -123,7 +129,7 @@ function run_script() {
 					mkdir -p ${process}
 					cd ${process}
 				
-					if (( ${bottleneck_dir} == "optimal/" )); then
+					if (( ${bottleneck_dir%/} == "optimal" )); then
 						num_nodes=$(( process / 8 ))
 						remainder=$(( process % 8 ))
 					
