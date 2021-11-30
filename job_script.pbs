@@ -16,10 +16,11 @@
 #PBS -q default
 
 ## This is the filename for all printed output from your code
-#PBS -o dense_linear_algebra.output
+# change output filename to fit matrix/method...etc.
+#PBS -o gauss_seidel.output
 
 ## This is the name of the job itself
-#PBS -N dense_linear_algebra
+#PBS -N gauss_seidel_project
 
 ## This line ensures the script runs in Bash
 #PBS -S /bin/bash
