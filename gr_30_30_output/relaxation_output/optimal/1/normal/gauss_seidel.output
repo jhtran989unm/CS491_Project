@@ -1,0 +1,23 @@
+Wheeler Portable Batch System Prologue
+Job Id: 1717804.wheeler-sn.alliance.unm.edu
+Username: jtran989
+Job 1717804.wheeler-sn.alliance.unm.edu running on nodes:
+wheeler007 
+
+prologue running on host: wheeler007
+Agent pid 2215
+Identity added: /users/jtran989/.ssh/true_id_rsa (/users/jtran989/.ssh/true_id_rsa)
+
+normal: relaxation
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 1
+num nodes: 1
+num processes per node: 8
+Jacobi Time : 1.763821e-03
+Relative Residual 1.000000e+00
+
+Hybrid Jacobi Time : 3.072238e-02
+Relative Residual 6.122697e-16
+Wheeler Portable Batch System Epilogue

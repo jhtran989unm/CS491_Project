@@ -1,0 +1,351 @@
+=============================================================================================
+Executing normally
+=============================================================================================
+DEBUG - matrix .pm path: /users/jtran989/cs491/project/CS491_Project/sparse_linear_algebra/suitesparse/gr_30_30.pm
+rm cg pcg repartition relaxation
+mpicxx -I/users/bienz/raptor/raptor cg.cpp -o cg -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor pcg.cpp -o pcg -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor relaxation.cpp -o relaxation -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor -I/users/bienz/packages/include repartition.cpp -o repartition -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -L/users/bienz/packages/lib -lparmetis -lmetis -std=c++11
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 1
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717804.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 2
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717805.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 4
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717806.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 8
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717807.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 16
+num nodes: 2
+num processes per node: 8
+---------------------------------------------------
+1717808.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 32
+num nodes: 4
+num processes per node: 8
+---------------------------------------------------
+1717809.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 1
+num nodes: 1
+num processes per node: 1
+---------------------------------------------------
+1717810.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 2
+num nodes: 2
+num processes per node: 1
+---------------------------------------------------
+1717811.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 4
+num nodes: 4
+num processes per node: 1
+---------------------------------------------------
+1717812.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 8
+num nodes: 8
+num processes per node: 1
+---------------------------------------------------
+1717813.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 16
+num nodes: 16
+num processes per node: 1
+---------------------------------------------------
+1717814.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 32
+num nodes: 32
+num processes per node: 1
+---------------------------------------------------
+1717815.wheeler-sn.alliance.unm.edu
+=============================================================================================
+Executing with Tau profiling
+=============================================================================================
+DEBUG - matrix .pm path: /users/jtran989/cs491/project/CS491_Project/sparse_linear_algebra/suitesparse/gr_30_30.pm
+rm cg pcg repartition relaxation
+mpicxx -I/users/bienz/raptor/raptor cg.cpp -o cg -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor pcg.cpp -o pcg -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor relaxation.cpp -o relaxation -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor -I/users/bienz/packages/include repartition.cpp -o repartition -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -L/users/bienz/packages/lib -lparmetis -lmetis -std=c++11
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 1
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717816.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 2
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717817.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 4
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717818.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 8
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717819.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 16
+num nodes: 2
+num processes per node: 8
+---------------------------------------------------
+1717820.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 32
+num nodes: 4
+num processes per node: 8
+---------------------------------------------------
+1717821.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 1
+num nodes: 1
+num processes per node: 1
+---------------------------------------------------
+1717822.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 2
+num nodes: 2
+num processes per node: 1
+---------------------------------------------------
+1717823.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 4
+num nodes: 4
+num processes per node: 1
+---------------------------------------------------
+1717824.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 8
+num nodes: 8
+num processes per node: 1
+---------------------------------------------------
+1717825.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 16
+num nodes: 16
+num processes per node: 1
+---------------------------------------------------
+1717826.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 32
+num nodes: 32
+num processes per node: 1
+---------------------------------------------------
+1717827.wheeler-sn.alliance.unm.edu
+=============================================================================================
+Executing with Tau tracing (and profiling)
+=============================================================================================
+DEBUG - matrix .pm path: /users/jtran989/cs491/project/CS491_Project/sparse_linear_algebra/suitesparse/gr_30_30.pm
+rm cg pcg repartition relaxation
+mpicxx -I/users/bienz/raptor/raptor cg.cpp -o cg -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor pcg.cpp -o pcg -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor relaxation.cpp -o relaxation -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -std=c++11
+mpicxx -I/users/bienz/raptor/raptor -I/users/bienz/packages/include repartition.cpp -o repartition -L/users/bienz/raptor/build/lib -lraptor -L/opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/netlib-lapack-3.6.1-x3vu6o3gstvgr6mwaa4l6i53jqrloqjc/lib64 -lblas -llapack -L/users/bienz/packages/lib -lparmetis -lmetis -std=c++11
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 1
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717828.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 2
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717829.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 4
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717830.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 8
+num nodes: 1
+num processes per node: 8
+---------------------------------------------------
+1717831.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 16
+num nodes: 2
+num processes per node: 8
+---------------------------------------------------
+1717832.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: optimal/
+total num processes: 32
+num nodes: 4
+num processes per node: 8
+---------------------------------------------------
+1717833.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 1
+num nodes: 1
+num processes per node: 1
+---------------------------------------------------
+1717834.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 2
+num nodes: 2
+num processes per node: 1
+---------------------------------------------------
+1717835.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 4
+num nodes: 4
+num processes per node: 1
+---------------------------------------------------
+1717836.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 8
+num nodes: 8
+num processes per node: 1
+---------------------------------------------------
+1717837.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 16
+num nodes: 16
+num processes per node: 1
+---------------------------------------------------
+1717838.wheeler-sn.alliance.unm.edu
+---------------------------------------------------
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 32
+num nodes: 32
+num processes per node: 1
+---------------------------------------------------
+1717839.wheeler-sn.alliance.unm.edu

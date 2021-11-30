@@ -1,0 +1,24 @@
+Wheeler Portable Batch System Prologue
+Job Id: 1710523.wheeler-sn.alliance.unm.edu
+Username: jtran989
+Job 1710523.wheeler-sn.alliance.unm.edu running on nodes:
+wheeler006 
+
+prologue running on host: wheeler006
+Agent pid 19619
+Identity added: /users/jtran989/.ssh/true_id_rsa (/users/jtran989/.ssh/true_id_rsa)
+
+profile: relaxation
+current program: relaxation
+
+bottleneck dir: communication/
+total num processes: 1
+num nodes: 1
+num processes per node: 1
+Jacobi Time : 1.042843e-03
+Relative Residual 1.000000e+00
+
+Hybrid Jacobi Time : 2.899337e-02
+Relative Residual 5.681951e-16
+Wheeler Portable Batch System Epilogue
+wheeler006: grep: tang: No such file or directory
