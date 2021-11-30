@@ -102,7 +102,7 @@ function run_script() {
 		matrix_dir=${matrix_dir_array[$j]}
 		matrix_pm_path=${matrix_pm_path_array[$j]}
 		
-		echo "DEBUG: matrix .pm path: {matrix_pm_path}"
+		echo "DEBUG: matrix .pm path: ${matrix_pm_path}"
 		
 		mkdir -p ${matrix_dir}
 		
