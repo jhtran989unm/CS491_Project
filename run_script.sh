@@ -223,6 +223,23 @@ function run_script() {
 							#echo "echo profile: ${program}, nodes: ${process}" >> ${run_script}
 							echo "echo profile: ${program}" >> ${run_script}
 						fi
+						
+						echo "echo current program: ${program_array[i]}" >> ${run_script}
+						echo "echo " >> ${run_script}
+						echo "echo bottleneck dir: ${bottleneck_dir}" >> ${run_script}
+						echo "echo total num processes: ${process}" >> ${run_script}
+						echo "echo num nodes: ${num_nodes}" >> ${run_script}
+						echo "echo num processes per node: ${num_processes_per_node}" >> ${run_script}
+					
+						#
+						echo "---------------------------------------------------"
+						echo "current program: ${program_array[i]}" 
+						echo ""
+						echo "bottleneck dir: ${bottleneck_dir}" 
+						echo "total num processes: ${process}" 
+						echo "num nodes: ${num_nodes}" 
+						echo "num processes per node: ${num_processes_per_node}" 
+						echo "---------------------------------------------------"
 			
 						#echo "#PBS -lnodes=${process}:ppn=8" >> ${run_script}
 						#REMEMBER to change line 9 if it changes
