@@ -3,20 +3,26 @@
 #root="/users/jtran989/cs491/hw4/dense-linear-algebra-Astrolace/" -- ran from root of repository
 up="../"
 output_array=("relaxation_output/")
+matrix_dir_array=("gr_30_30_output/")
 #child_array=("1" "4" "16")
 
-for output in "${output_array[@]}"
+for matrix_dir in "${matrix_dir_array[@]}"
 do
-	[[ -d ${output} ]] && rm -r ${output}
-	
-	# cd ${output}
-# 	for child in "${child_array[@]}"
-# 	do
-# 		[[ -d ${child} ]] && rm -r ${child} # remove the three cases for 1, 4, and 16 nodes
-# 	done
-# 	#rm -r -d 1 4 16
-# 	cd ${up}
+	[[ -d ${matrix_dir} ]] && rm -r ${matrix_dir}
 done
+
+# for output in "${output_array[@]}"
+# do
+# 	[[ -d ${output} ]] && rm -r ${output}
+#
+# 	# cd ${output}
+# # 	for child in "${child_array[@]}"
+# # 	do
+# # 		[[ -d ${child} ]] && rm -r ${child} # remove the three cases for 1, 4, and 16 nodes
+# # 	done
+# # 	#rm -r -d 1 4 16
+# # 	cd ${up}
+# done
 
 ./run_script.sh -n
 ./run_script.sh -p
