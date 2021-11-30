@@ -99,8 +99,10 @@ function run_script() {
 	do
 		cd ${root}
 		
-		matrix_dir=${matrix_dir_array[j]}
-		matrix_pm_path=${matrix_pm_path_array[j]}
+		matrix_dir=${matrix_dir_array[$j]}
+		matrix_pm_path=${matrix_pm_path_array[$j]}
+		
+		echo "DEBUG: matrix .pm path: {matrix_pm_path}"
 		
 		mkdir -p ${matrix_dir}
 		
@@ -113,9 +115,9 @@ function run_script() {
 			# move to run script (.pbs)
 			#echo "current program: ${program_array[i]}"
 		
-			code=${code_array[i]}
-			program=${program_array[i]}
-			output=${output_array[i]}
+			code=${code_array[$i]}
+			program=${program_array[$i]}
+			output=${output_array[$i]}
 		
 			# ASSUMING C++ CODE
 			make
