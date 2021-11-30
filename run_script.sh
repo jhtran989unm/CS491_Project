@@ -154,23 +154,6 @@ function run_script() {
 						num_nodes=${process}
 						num_processes_per_node=1
 					fi
-				
-					echo "echo current program: ${program_array[i]}" >> ${run_script}
-					echo "echo " >> ${run_script}
-					echo "echo bottleneck dir: ${bottleneck_dir}" >> ${run_script}
-					echo "echo total num processes: ${process}" >> ${run_script}
-					echo "echo num nodes: ${num_nodes}" >> ${run_script}
-					echo "echo num processes per node: ${num_processes_per_node}" >> ${run_script}
-					
-					#
-					echo "---------------------------------------------------"
-					echo "current program: ${program_array[i]}" 
-					echo ""
-					echo "bottleneck dir: ${bottleneck_dir}" 
-					echo "total num processes: ${process}" 
-					echo "num nodes: ${num_nodes}" 
-					echo "num processes per node: ${num_processes_per_node}" 
-					echo "---------------------------------------------------"
 		
 					# CREATE SEPARATE DIR FOR DIFFERENT TYPE BELOW
 					# extra up for each...
@@ -184,6 +167,23 @@ function run_script() {
 						echo "echo normal: ${program}" >> ${run_script}
 						#echo "echo normal: ${program}, nodes: ${process}" >> ${run_script}
 						#echo "#PBS -lnodes=${process}:ppn=8" >> ${run_script}
+						
+						echo "echo current program: ${program_array[i]}" >> ${run_script}
+						echo "echo " >> ${run_script}
+						echo "echo bottleneck dir: ${bottleneck_dir}" >> ${run_script}
+						echo "echo total num processes: ${process}" >> ${run_script}
+						echo "echo num nodes: ${num_nodes}" >> ${run_script}
+						echo "echo num processes per node: ${num_processes_per_node}" >> ${run_script}
+					
+						#
+						echo "---------------------------------------------------"
+						echo "current program: ${program_array[i]}" 
+						echo ""
+						echo "bottleneck dir: ${bottleneck_dir}" 
+						echo "total num processes: ${process}" 
+						echo "num nodes: ${num_nodes}" 
+						echo "num processes per node: ${num_processes_per_node}" 
+						echo "---------------------------------------------------"
 					
 						#REMEMBER to change line 9 if it changes
 						#sed -i "9 i #PBS -lnodes=${process}:ppn=8" ${run_script}
