@@ -110,6 +110,7 @@ function run_script() {
 			output=${output_array[i]}
 		
 			# ASSUMING C++ CODE
+			make
 			mpicxx -o ${program} ${code} -std=c++11
 	
 			#cd ${up}${matrix_dir}${output}
@@ -131,7 +132,7 @@ function run_script() {
 					
 					echo "TEST: ${bottleneck_dir%/}"
 				
-					if (( ${bottleneck_dir%/} == "optimal" )); then
+					if (( "${bottleneck_dir%/}" == "optimal" )); then
 						num_nodes=$(( process / 8 ))
 						remainder=$(( process % 8 ))
 					
