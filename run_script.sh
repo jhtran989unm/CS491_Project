@@ -120,6 +120,8 @@ function run_script() {
 			output=${output_array[$i]}
 		
 			# ASSUMING C++ CODE
+			# clean before making it...
+			make clean
 			make
 			#mpicxx -o ${program} ${code} -std=c++11
 	
