@@ -53,7 +53,7 @@ done
 
 matrix_pm_filename_array=("gr_30_30.pm")
 matrix_pm_path_array=()
-for matrix_pm_filename in "${matrix_pm_filenmae_array[@]}"
+for matrix_pm_filename in "${matrix_pm_filename_array[@]}"
 do
 	matrix_pm_path_array+=(${programs_root}"suitesparse/"${matrix_pm_filename})
 done
