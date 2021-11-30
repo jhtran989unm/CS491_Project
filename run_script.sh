@@ -428,6 +428,8 @@ function run_success_check {
 						
 						cd ${up}
 					done
+					
+					cd ${up}
 				done
 				
 				cd ${up}
