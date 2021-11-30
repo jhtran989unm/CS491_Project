@@ -53,7 +53,7 @@ done
 
 matrix_pm_filename_array=("gr_30_30.pm")
 matrix_pm_path_array=()
-for matrix_pm_filename in "${matrix_pm_path_array[@]}"
+for matrix_pm_filename in "${matrix_pm_filenmae_array[@]}"
 do
 	matrix_pm_path_array+=(${programs_root}"suitesparse/"${matrix_pm_filename})
 done
@@ -102,7 +102,7 @@ function run_script() {
 		matrix_dir=${matrix_dir_array[$j]}
 		matrix_pm_path=${matrix_pm_path_array[$j]}
 		
-		echo "DEBUG: matrix .pm path: ${matrix_pm_path}"
+		echo "DEBUG - matrix .pm path: ${matrix_pm_path}"
 		
 		mkdir -p ${matrix_dir}
 		
