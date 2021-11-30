@@ -45,10 +45,18 @@ matrix_dir_array=("gr_30_30_output/")
 
 # matrix names
 matrix_mtx_filename_array=("gr_30_30.mtx")
-matrix_mtx_path_array=(${programs_root}"suitesparse/"${matrix_mtx_filename})
+matrix_mtx_path_array=()
+for matrix_mtx_filename in "${matrix_mtx_filename_array[@]}"
+do
+	matrix_mtx_path_array+=(${programs_root}"suitesparse/"${matrix_mtx_filename})
+done
 
 matrix_pm_filename_array=("gr_30_30.pm")
-matrix_pm_path_array=(${programs_root}"suitesparse/"${matrix_pm_filename})
+matrix_pm_path_array=()
+for matrix_pm_filename in "${matrix_pm_path_array[@]}"
+do
+	matrix_pm_path_array+=(${programs_root}"suitesparse/"${matrix_pm_filename})
+done
 
 # programs size -- REMEMBER TO EDIT
 num_programs=1
