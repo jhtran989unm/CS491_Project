@@ -128,6 +128,8 @@ function run_script() {
 				do
 					mkdir -p ${process}
 					cd ${process}
+					
+					echo "TEST: ${bottleneck_dir%/}"
 				
 					if (( ${bottleneck_dir%/} == "optimal" )); then
 						num_nodes=$(( process / 8 ))
