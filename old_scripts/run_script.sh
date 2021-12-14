@@ -1,7 +1,5 @@
 # processes array
-# num_processes=4
-
-# only need to run on 16 processes this time...
+num_processes=4
 process_array=(1 2 4 8 16 32)
 
 # program names
@@ -33,90 +31,44 @@ programs_root=${root}${programs_dir}
 # bottleneck cases
 # optimal - max 8 processes per node (uses as few nodes as possible)
 # communication - only 1 process per node (test limits of communication) where #nodes=#processes
-# for the homework, we don't need communication -- not working...
-bottleneck_dir_array=("optimal/")
+bottleneck_dir_array=("optimal/" "communication/")
 
 # g_30_30 matrix
-# EDIT: fetch the matrix MANUALLY
+# fetch the matrix MANUALLY
 matrix_link=""
 
-# matrix name (used for the others below)
-# bcsstm07 was a bust for pcg for some reason...
-# finished nasa2146, so don't need to run it again...
-# actually, removed some with pretty big file sizes...
-matrix_name_array=("gr_30_30" "bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
-
-# matrix size 
-#TODO: -- REMEMBER TO EDIT -- actually, just find length of array
-num_matrices=${#matrix_name_array[@]}
+# matrix size -- REMEMBER TO EDIT
+num_matrices=1
 
 # matrix dir
+matrix_dir_array=("gr_30_30_output/")
 
-# matrix_dir_array=("nasa2146_output/")
-matrix_dir_array=()
-for matrix_name in "${matrix_name_array[@]}"
-do
-	matrix_dir_array+=(${matrix_name}"_output/")
-done
-
-# matrix mtx filenames (assume marketplace format)
-
-# matrix_mtx_filename_array=("gr_30_30.mtx")
-matrix_mtx_filename_array=()
-for matrix_name in "${matrix_name_array[@]}"
-do
-	matrix_mtx_filename_array+=(${matrix_name}".mtx")
-done
-
-# matrix mtx paths (marketplace)
+# matrix names
+matrix_mtx_filename_array=("gr_30_30.mtx")
 matrix_mtx_path_array=()
 for matrix_mtx_filename in "${matrix_mtx_filename_array[@]}"
 do
 	matrix_mtx_path_array+=(${programs_root}"suitesparse/"${matrix_mtx_filename})
 done
 
-# matrix pm filenames (PetscBinary) -- used with the programs/methods below
-
-# matrix_pm_filename_array=("gr_30_30.pm")
-matrix_pm_filename_array=()
-for matrix_name in "${matrix_name_array[@]}"
-do
-	matrix_pm_filename_array+=(${matrix_name}".pm")
-done
-
-
-# matrix pm paths (PetscBinary)
+matrix_pm_filename_array=("gr_30_30.pm")
 matrix_pm_path_array=()
 for matrix_pm_filename in "${matrix_pm_filename_array[@]}"
 do
 	matrix_pm_path_array+=(${programs_root}"suitesparse/"${matrix_pm_filename})
 done
 
+# programs size -- REMEMBER TO EDIT
+num_programs=1
+
+# code array
+code_array=("relaxation.cpp")
+
 # program array
-# just run the new code repart_relax since it includes both cases (with and without repartition on top of relaxation)
-program_array=("repart_relax")
-
-# programs size
-# TODO: REMEMBER TO EDIT -- again, find length of array
-num_programs=${#program_array[@]}
-
-# code array (assume C++ code...)
-
-# code_array=("relaxation.cpp")
-code_array=()
-for program in "${program_array[@]}"
-do
-	code_array+=(${program}".cpp")
-done
+program_array=("relaxation")
 
 # output array
-
-# output_array=("relaxation_output/")
-output_array=()
-for program in "${program_array[@]}"
-do
-	output_array+=(${program}"_output/")
-done
+output_array=("relaxation_output/")
 
 normal_dir="normal/"
 profile_dir="profile/"
@@ -127,9 +79,11 @@ normal=0
 tau_profile=0
 tau_trace=0
 
-# remove ups since ABSOLUTE path is used
+# command line argument for the programs
+num_elements_one=1000
+num_elements_ten=10000
 
-# TODO: fix the compiling of the programs...can't find the executables...
+# remove ups since ABSOLUTE path is used
 
 # changed from run_script_inner_prod
 function run_script() {
@@ -140,19 +94,6 @@ function run_script() {
 	# fetch the mtx (matrix marketplace) file first
 	# then convert to .pm
 	# MANUALLY
-	
-	# create executables first...
-	# ASSUMING C++ CODE
-	# clean before making it...
-	cd ${programs_root}
-	
-	echo "Preparing to make the executables of the programs..."
-	
-	make clean
-	make
-	#mpicxx -o ${program} ${code} -std=c++11
-	
-	echo "Finished making the executables of the programs"
 	
 	for (( j=0; j<${num_matrices}; j++ ))
 	do
@@ -178,7 +119,11 @@ function run_script() {
 			program=${program_array[$i]}
 			output=${output_array[$i]}
 		
-			# move the make outside the loop (only make it once per execution)
+			# ASSUMING C++ CODE
+			# clean before making it...
+			make clean
+			make
+			#mpicxx -o ${program} ${code} -std=c++11
 	
 			#cd ${up}${matrix_dir}${output}
 			cd ${root}${matrix_dir}
@@ -227,7 +172,6 @@ function run_script() {
 						#echo "echo normal: ${program}, nodes: ${process}" >> ${run_script}
 						#echo "#PBS -lnodes=${process}:ppn=8" >> ${run_script}
 						
-						echo "echo current matrix: ${matrix_dir%_output/}"
 						echo "echo current program: ${program_array[i]}" >> ${run_script}
 						echo "echo " >> ${run_script}
 						echo "echo bottleneck dir: ${bottleneck_dir}" >> ${run_script}
@@ -237,7 +181,6 @@ function run_script() {
 					
 						#
 						echo "---------------------------------------------------"
-						echo "current matrix: ${matrix_dir%_output/}"
 						echo "current program: ${program_array[i]}" 
 						echo ""
 						echo "bottleneck dir: ${bottleneck_dir}" 
@@ -252,13 +195,7 @@ function run_script() {
 					
 						# echo "mpirun -n ${process} ${up2}${programs_root}${program} ${num_elements}" >> ${run_script}
 						#${up4}
-						
-						if [[ "${bottleneck_dir%/}" == "communication" ]]; then
-							# for communication, make sure only process is allocated per node
-							echo "mpirun -n ${process} --map-by node:PE=1 ${programs_root}${program} ${matrix_pm_path}" >> ${run_script}
-						else
-							echo "mpirun -n ${process} ${programs_root}${program} ${matrix_pm_path}" >> ${run_script}
-						fi
+						echo "mpirun -n ${process} ${programs_root}${program} ${matrix_pm_path}" >> ${run_script}
 					
 						#mpirun -n ${process} ${up2}${programs_root}${program} ${num_elements}
 						qsub ${run_script}
@@ -334,6 +271,125 @@ function run_script() {
 		
 		cd ${up}
 	done
+	
+	
+	
+	# cd to dense_linear_alg dir
+	# cd ${root}
+# 	echo "choice: "${choice}
+#
+# 	if [ "${choice}" == "i" ]
+# 	then
+# 		output=${inner_prod_output}
+# 		program=${inner_prod_program}
+# 		num_elements=${num_elements_ten}
+# 	elif [ "${choice}" == "m" ]
+# 	then
+# 		output=${matvec_output}
+# 		program=${matvec_program}
+# 		num_elements=${num_elements_one}
+# 	elif [ "${choice}" == "m2" ]
+# 	then
+# 		output=${matvec_2d_output}
+# 		program=${matvec_2d_program}
+# 		num_elements=${num_elements_one}
+# 	elif [ "${choice}" == "c" ]
+# 	then
+# 		output=${cannon_output}
+# 		program=${cannon_program}
+# 		num_elements=${num_elements_one}
+# 	else
+# 		echo "Sorry, invalid option argument. Please choose from the following: [i, m, m2, c]"
+# 		exit
+# 	fi
+#
+# 	mpicxx -o ${program} inner_prod.cpp -std=c++11
+#
+# 	cd ${up}${output}
+#
+# 	for process in "${process_array[@]}"
+# 	do
+# 		mkdir -p ${process}
+# 		cd ${process}
+#
+# 		# CREATE SEPARATE DIR FOR DIFFERENT TYPE BELOW
+#
+# 		if (( ${normal} == 1 )); then
+# 			cp ${up2}${run_script} .
+#
+# 			echo "echo normal: ${program}, nodes: ${process}" >> ${run_script}
+# 			#echo "#PBS -lnodes=${process}:ppn=8" >> ${run_script}
+# 			#REMEMBER to change line 9 if it changes
+# 			sed -i "9 i #PBS -lnodes=${process}:ppn=8" ${run_script}
+# 			echo "mpirun -n ${process} ${up2}${programs_root}${program} ${num_elements}" >> ${run_script}
+# 			#mpirun -n ${process} ${up2}${programs_root}${program} ${num_elements}
+# 			qsub ${run_script}
+# 		fi
+#
+# 		if (( ${tau_trace} == 1 )); then
+# 			mkdir -p ${trace_dir}
+# 			cd ${trace_dir}
+#
+# 			cp ${up3}${run_script} .
+#
+# 			echo "export TAU_TRACE=1" >> ${run_script}
+# 			echo "echo trace: ${program}, nodes: ${process}" >> ${run_script}
+# 		fi
+#
+# 		if (( ${tau_profile} == 1 )); then
+# 			if (( ${tau_trace} == 0 )); then
+# 				mkdir -p ${profile_dir}
+# 				cd ${profile_dir}
+#
+# 				cp ${up3}${run_script} .
+#
+# 				echo "echo profile: ${program}, nodes: ${process}" >> ${run_script}
+# 			fi
+#
+# 			#echo "#PBS -lnodes=${process}:ppn=8" >> ${run_script}
+# 			#REMEMBER to change line 9 if it changes
+# 			sed -i "9 i #PBS -lnodes=${process}:ppn=8" ${run_script}
+# 			echo "mpirun -n ${process} tau_exec ${up3}${programs_root}${program} ${num_elements}" >> ${run_script}
+# 			#mpirun -n ${process} tau_exec ${up3}${programs_root}${inner_prod_program} ${num_elements}
+# 			qsub ${run_script}
+#
+# 			cd ${up}
+# 		fi
+#
+# 		cd ${up}
+# 	done
+}
+
+function run_script_matvec_2d {
+	module load mpich-3.2-gcc-4.8.5-7ebkszx
+	
+	if (( ${normal} == 1 )); then 
+		mpirun -n ${num_processes} ./example
+	fi 
+	
+	if (( ${tau_trace} == 1 )); then 
+		export TAU_TRACE=1
+	fi
+	
+	if (( ${tau_profile} == 1 )); then 
+		mpirun -n ${num_processes} tau_exec ./example
+	fi
+}
+
+function run_script_cannon {
+	module load mpich-3.2-gcc-4.8.5-7ebkszx
+	
+	if (( ${normal} == 1 )); then 
+		mpirun -n ${num_processes} ./example
+	fi 
+	
+	if (( ${tau_trace} == 1 )); then 
+		export TAU_TRACE=1
+	fi
+	
+	if (( ${tau_profile} == 1 )); then 
+		mpirun -n ${num_processes} tau_exec ./example
+	fi
 }
 
 function run_success_check {
@@ -411,6 +467,53 @@ function run_success_check {
 		
 		cd ${up}
 	done
+
+	# for output in "${output_array[@]}"
+# 	do
+# 		cd ${output}
+#
+# 		for process in "${process_array[@]}"
+# 		do
+# 			cd ${child}
+# 			echo "${output%_output/}, processes: ${child}"
+#
+# 			length=${#profile_trace_array[*]}
+# 			for (( i=0; i<$(( $length )); i++ ))
+# 			do
+# 				cd ${profile_trace_array[$i]}
+#
+# 				if [ -n "$(find . -name "${profile_trace_output_array[$i]}" | head -1)" ]
+# 				then
+# 					echo "${profile_trace_array[$i]%/}: success"
+# 				else
+# 					echo "${profile_trace_array[$i]%/}: missing"
+# 				fi
+#
+# 				cd ${up}
+# 			done
+#
+# 			# for profile_trace in "${profile_trace_array[@]}"
+# 			# do
+# 			# 	cd ${profile_trace}
+# 			#
+# 			# 	echo "${output}, ${child} nodes"
+# 			#
+# 			# 	if [ -n "$(find . -name "${profile_trace}" | head -1)" ]
+# 			# 	then
+# 			# 		echo "${profile_trace}: success"
+# 			# 	else
+# 			# 		echo "${profile_trace}: missing"
+# 			# 	fi
+# 			#
+# 			# 	cd ${up}
+# 			# done
+#
+# 			cd ${up}
+# 		done
+#
+# 		cd ${up}
+# 		echo ""
+# 	done
 }
 
 # module load mpich-3.2-gcc-4.8.5-7ebkszx
@@ -428,8 +531,6 @@ while getopts "hnpts" args; do
 		echo "  -n  run normally"
 		echo "  -p  run with Tau profiling"
 		echo "  -t  run with Tau tracing"
-		echo "  -s  check the success of running jobs -- check the corresponding output files"
-		echo " e.g., 'profile.*' files for profiling..."
 		echo "============================================================================================="
 		exit;;
 	n)
@@ -465,15 +566,8 @@ while getopts "hnpts" args; do
 		exit;;
 	\?)
 		echo "============================================================================================="
-		echo "Sorry, invalid option. Please use option -h for a list of valid options."
+		echo "Sorry, invalid option. Please use option -h for valid options."
 		echo "============================================================================================="
 		exit;;
 	esac
 done 
-
-if [ $OPTIND -eq 1 ]; 
-then 
-	echo "============================================================================================="
-	echo "No options were passed. Please use option -h for a list of valid options."; 
-	echo "============================================================================================="
-fi
