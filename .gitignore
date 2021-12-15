@@ -138,9 +138,50 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+############################
+
+# C++ Stuff
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+############################
+
 # Personal additions
 *.DS_Store
 .DS_Store
 .idea
 *.idea
-
+cmake-build-debug
+CMakeLists.txt
+test_file.cpp
+another_test_file.cpp
