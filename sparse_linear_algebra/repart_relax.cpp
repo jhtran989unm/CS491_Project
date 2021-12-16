@@ -55,8 +55,9 @@ int main(int argc, char* argv[])
      * - Repartitioned Hybrid residual
      */
 	// make sure only rank 0 does all the writing to file...
+	ofstream dataFile;
+	
 	if (rank == 0) {
-	    ofstream dataFile;
 	    dataFile.open ("data.txt", ios_base::app);
 	}
   
