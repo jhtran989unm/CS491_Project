@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     ParVector tmp = ParVector(A->global_num_rows, A->local_num_rows);
 
 
-    int n_iter = 30; // changed from 5
+    int n_iter = 1000; // changed from 5
     double bnorm = b.norm(2);
 
     /*
