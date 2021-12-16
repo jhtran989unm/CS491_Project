@@ -74,18 +74,18 @@ if __name__ == "__main__":
 
     # color='...'
     # blue - b
-    plt.bar(br1, output[0], color='b', width=barWidth, label=f"Hybrid time",
+    plt.bar(br1, output[0], width=barWidth, label=f"Hybrid time",
             log=1)
 
     # changed from br3 -- stack the repartition time with new hybrid time
     # change so output[3] is on bottom -- new repartitioned hybrid time
     # red - r
-    plt.bar(br2, output[3], color='r', width=barWidth, label=f"Repartitioned "
+    plt.bar(br2, output[3], width=barWidth, label=f"Repartitioned "
                                                             f"Hybrid time",
             log=1)
 
     # green - g
-    plt.bar(br2, output[2], color='g', width=barWidth, label=f"Repartition "
+    plt.bar(br2, output[2], width=barWidth, label=f"Repartition "
                                                              f"time",
             bottom=output[3], log=1)
 
@@ -138,12 +138,16 @@ if __name__ == "__main__":
     # check if the grid looks good...
 
     # ax = fig.add_axes([0, 0, 1, 1])
-    plt.bar(br1, output[1], color='b', width=barWidth, label=f"Hybrid Residual",
+    # color='...'
+    # blue - b
+    plt.bar(br1, output[1], width=barWidth, label=f"Hybrid Residual",
             log=1)
 
     # changed from br3 -- stack the repartition time with new hybrid time
     # change so output[3] is on bottom -- new repartitioned hybrid time
-    plt.bar(br2, output[4], color='r', width=barWidth, label=f"Repartitioned "
+    # color='...'
+    # red - r
+    plt.bar(br2, output[4], width=barWidth, label=f"Repartitioned "
                                                              f"Hybrid Residual",
             log=1)
 
