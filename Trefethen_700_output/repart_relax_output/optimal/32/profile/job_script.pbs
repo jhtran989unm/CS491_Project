@@ -1,0 +1,57 @@
+#!/bin/bash
+
+########################################################################
+# PBS directives, ie arguments to qsub. Learn more by running "man qsub"  
+########################################################################
+
+## This requests 1 node, and 8 cores, which is perfect our our thread-level programming
+## EDIT BELOW?
+#PBS -lnodes=4:ppn=8
+
+
+## This is the max run-time allowed  hr:min:sec
+#PBS -l walltime=00:05:00 
+
+## The debug queue will likely be faster, but if your code takes more than 5 or
+## 10 minutes, switch "debug" to "default"
+#PBS -q default
+
+## This is the filename for all printed output from your code
+# change output filename to fit matrix/method...etc.
+#PBS -o gauss_seidel.output
+
+## This is the name of the job itself
+#PBS -N gauss_seidel_project
+
+## This line ensures the script runs in Bash
+#PBS -S /bin/bash
+
+## Send mail when the script aborts "a" and ends "e" to your email address
+# comment out for now
+###PBS -m ae
+###PBS -M jtran989@unm.edu 
+
+## This line joins the output and error to print to the same file
+#PBS -j oe
+
+########################################################################
+########################################################################
+
+
+cd $PBS_O_WORKDIR
+
+module load mpich-3.2-gcc-4.8.5-7ebkszx
+module load netlib-lapack-3.6.1-gcc-4.8.5-x3vu6o3
+#./dense_linear_algebra.sh -n i
+
+echo ""
+
+echo profile: repart_relax
+echo current matrix: Trefethen_700
+echo current program: repart_relax
+echo 
+echo bottleneck dir: optimal/
+echo total num processes: 32
+echo num nodes: 4
+echo num processes per node: 8
+mpirun -n 32 tau_exec /users/jtran989/cs491/project/CS491_Project/sparse_linear_algebra/repart_relax /users/jtran989/cs491/project/CS491_Project/sparse_linear_algebra/suitesparse/Trefethen_700.pm
