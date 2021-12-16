@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     ParVector tmp = ParVector(A->global_num_rows, A->local_num_rows);
 
 
-    int n_iter = 1000; // changed from 5
+    int n_iter = 30; // changed from 5
     double bnorm = b.norm(2);
 
     /*
@@ -54,8 +54,11 @@ int main(int argc, char* argv[])
      * - Repartitioned Hybrid time
      * - Repartitioned Hybrid residual
      */
-    ofstream dataFile;
-    dataFile.open ("data.txt", ios_base::app);
+	// make sure only rank 0 does all the writing to file...
+	if (rank == 0) {
+	    ofstream dataFile;
+	    dataFile.open ("data.txt", ios_base::app);
+	}
   
     // Jacobi
     x.set_const_value(1.0);
@@ -87,7 +90,9 @@ int main(int argc, char* argv[])
     if (rank == 0) printf("Hybrid Jacobi Time : %e\n", t0);
 
     // write Hybrid time
-    dataFile << t0 << "\n";
+	if (rank == 0) {
+		dataFile << t0 << "\n";
+	}
 
     A->residual(x, b, tmp);
     norm = tmp.norm(2);
@@ -95,7 +100,9 @@ int main(int argc, char* argv[])
     if (rank == 0) printf("Relative Residual %e\n\n", residualHybrid);
 
     // write Hybrid residual
-    dataFile << residualHybrid << "\n";
+	if (rank == 0) {
+    	dataFile << residualHybrid << "\n";
+	}
 
     // Repartitioning : 
     MPI_Barrier(MPI_COMM_WORLD);
@@ -113,7 +120,9 @@ int main(int argc, char* argv[])
     if (rank == 0) printf("Repartition Time : %e\n\n", t0);
 
     // write Repartition time
-    dataFile << t0 << "\n";
+	if (rank == 0) {
+    	dataFile << t0 << "\n";
+	}
 
     // Repartitioned Jacobi
     x_part.set_const_value(1.0);
@@ -137,7 +146,9 @@ int main(int argc, char* argv[])
     if (rank == 0) printf("Repartitioned Hybrid Jacobi Time : %e\n", t0);
 
     // write Repartitioned Hybrid time
-    dataFile << t0 << "\n";
+	if (rank == 0) {
+    	dataFile << t0 << "\n";
+	}
 
     A_part->residual(x_part, b_part, tmp_part);
     norm = tmp_part.norm(2);
@@ -145,14 +156,18 @@ int main(int argc, char* argv[])
     if (rank == 0) printf("Relative Residual %e\n", residualRepartHybrid);
 
     // write Repartitioned Hybrid residual
-    dataFile << residualRepartHybrid << "\n";
+	if (rank == 0) {
+    	dataFile << residualRepartHybrid << "\n";
+	}
 
     delete A;
 
     MPI_Finalize();
 
     // close the file
-    dataFile.close();
+	if (rank == 0) {
+    	dataFile.close();
+	}
 
     return 0;
 }
