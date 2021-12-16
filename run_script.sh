@@ -233,7 +233,7 @@ function run_script() {
 						#echo "echo normal: ${program}, nodes: ${process}" >> ${run_script}
 						#echo "#PBS -lnodes=${process}:ppn=8" >> ${run_script}
 						
-						echo "echo current matrix: ${matrix_dir%_output/}"
+						echo "echo current matrix: ${matrix_dir%_output/}" >> ${run_script}
 						echo "echo current program: ${program_array[i]}" >> ${run_script}
 						echo "echo " >> ${run_script}
 						echo "echo bottleneck dir: ${bottleneck_dir}" >> ${run_script}
@@ -297,6 +297,7 @@ function run_script() {
 							echo "echo profile: ${program}" >> ${run_script}
 						fi
 						
+						echo "echo current matrix: ${matrix_dir%_output/}" >> ${run_script}
 						echo "echo current program: ${program_array[i]}" >> ${run_script}
 						echo "echo " >> ${run_script}
 						echo "echo bottleneck dir: ${bottleneck_dir}" >> ${run_script}
@@ -306,6 +307,7 @@ function run_script() {
 					
 						#
 						echo "---------------------------------------------------"
+						echo "current matrix: ${matrix_dir%_output/}"
 						echo "current program: ${program_array[i]}" 
 						echo ""
 						echo "bottleneck dir: ${bottleneck_dir}" 
