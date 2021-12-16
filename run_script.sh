@@ -48,6 +48,8 @@ matrix_link=""
 # finished nasa2146, so don't need to run it again...
 # actually, removed some with pretty big file sizes...
 
+dir_append="_output/"
+
 #FIXME: test with gr_30_30 for now...
 # already did gr_30_30, now just the others
 matrix_name_array=("bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
@@ -422,13 +424,77 @@ function run_success_check {
 	done
 }
 
+function gather_data_files {
+	#gather_data_array=()
+	
+	for matrix_dir in "${matrix_dir_array[@]}"
+	do
+		cd ${matrix_dir}
+		
+		for output_dir in "${output_array[@]}"
+		do
+			cd ${output_dir}
+			data_gather_filename="${matrix_dir%${dir_append}}_${output_dir%${dir_append}}}_data.txt"
+			#gather_data_array+=(${data_gather_filename})
+			
+			for bottleneck_dir in "${bottleneck_dir_array[@]}"
+			do
+				cd ${bottleneck_dir}
+				
+				for process in "${process_array[@]}"
+				do
+					cd ${process}
+					
+					# gather the data from the NORMAL dir for convenience
+					# for now, just optimal for bottleneck, so disregard it
+					# put at root of matrix_dir
+					normal_dir="normal/"
+					data_filename="data.txt"
+					
+					cd ${normal_dir}
+					
+					cat ${data_filename} >> ${up3}${data_gather_filename}
+					
+					cd ${up2}
+				done
+				
+				cd ${up}
+			done
+			
+			cd ${up}
+		done
+		
+		cd ${up}
+	done
+	
+	plots_dir="plots_code/"
+	
+	# now, copy all those gather files into the plot_code/ dir...
+	for matrix_dir in "${matrix_dir_array[@]}"
+	do
+		cd ${matrix_dir}
+		
+		for output_dir in "${output_array[@]}"
+		do
+			cd ${output_dir}
+			
+			# should copy to the plots dir
+			cp ${data_gather_filename} ${up2}${plots_dir}
+			
+			cd ${up}
+		done
+		
+		cd ${up}
+	done
+}
+
 # module load mpich-3.2-gcc-4.8.5-7ebkszx
 # mpirun -n ${num_processes} ./example
 
 # ;; vs exit;; (one continues and the other exits)
 
 # OPTIONS
-while getopts "hnpts" args; do
+while getopts "hnptsd" args; do
 	case $args in 
 	h)
 		echo "============================================================================================="
@@ -438,6 +504,7 @@ while getopts "hnpts" args; do
 		echo "  -p  run with Tau profiling"
 		echo "  -t  run with Tau tracing"
 		echo "  -s  check the success of running jobs -- check the corresponding output files"
+		echo "  -d  gather all data files to the plots_code dir to generate the plots"
 		echo " e.g., 'profile.*' files for profiling..."
 		echo "============================================================================================="
 		exit;;
@@ -471,6 +538,12 @@ while getopts "hnpts" args; do
 		echo "Checking success of outputs..."
 		echo "============================================================================================="
 		run_success_check
+		exit;;
+	d)
+		echo "============================================================================================="
+		echo "Moving all data files from repart_relax program to plots_code/ for generating the plots..."
+		echo "============================================================================================="
+		gather_data_files
 		exit;;
 	\?)
 		echo "============================================================================================="
