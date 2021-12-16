@@ -49,8 +49,9 @@ matrix_link=""
 # actually, removed some with pretty big file sizes...
 
 #FIXME: test with gr_30_30 for now...
-# matrix_name_array=("gr_30_30" "bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
-matrix_name_array=("gr_30_30")
+# already did gr_30_30, now just the others
+matrix_name_array=("bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
+# matrix_name_array=("gr_30_30")
 
 # matrix size 
 #TODO: -- REMEMBER TO EDIT -- actually, just find length of array

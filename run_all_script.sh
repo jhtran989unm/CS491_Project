@@ -16,8 +16,9 @@
 # matrix name (used for the others below)
 # see run script (changed...)
 # TODO: !!!REMEMBER TO UPDATE!!! -- need to find some way to read from a file, like .json
-# matrix_name_array=("gr_30_30" "bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
-matrix_name_array=("gr_30_30")
+# already did gr_30_30, now just the others
+matrix_name_array=("bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
+# matrix_name_array=("gr_30_30")
 
 # matrix_dir_array=("nasa2146_output/")
 matrix_dir_array=()
