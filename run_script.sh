@@ -52,7 +52,8 @@ dir_append="_output/"
 
 #FIXME: test with gr_30_30 for now...
 # already did gr_30_30, now just the others
-matrix_name_array=("bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
+# for the data gather...all matrices
+matrix_name_array=("gr_30_30" "bcsstm07" "ex3" "Journals" "nasa2146" "Trefethen_700")
 # matrix_name_array=("gr_30_30")
 
 # matrix size 
@@ -434,7 +435,10 @@ function gather_data_files {
 		for output_dir in "${output_array[@]}"
 		do
 			cd ${output_dir}
-			data_gather_filename="${matrix_dir%${dir_append}}_${output_dir%${dir_append}}}_data.txt"
+			data_gather_filename="${matrix_dir%${dir_append}}_${output_dir%${dir_append}}_data.txt"
+			
+			# need to refresh data -- better bookkeeping
+			rm -f ${data_gather_filename}
 			#gather_data_array+=(${data_gather_filename})
 			
 			for bottleneck_dir in "${bottleneck_dir_array[@]}"
@@ -467,8 +471,6 @@ function gather_data_files {
 		cd ${up}
 	done
 	
-	plots_dir="plots_code/"
-	
 	# now, copy all those gather files into the plot_code/ dir...
 	for matrix_dir in "${matrix_dir_array[@]}"
 	do
@@ -479,6 +481,7 @@ function gather_data_files {
 			cd ${output_dir}
 			
 			# should copy to the plots dir
+			data_gather_filename="${matrix_dir%${dir_append}}_${output_dir%${dir_append}}_data.txt"
 			cp ${data_gather_filename} ${up2}${plots_dir}
 			
 			cd ${up}
@@ -488,13 +491,32 @@ function gather_data_files {
 	done
 }
 
+function generate_plots {
+	# plots dir to generate the plots (with the code)
+	plots_dir="plots_code/"
+	generate_plots_python="generate_plot.py"
+	
+	cd ${plots_dir}
+	
+	for matrix_dir in "${matrix_dir_array[@]}"
+	do
+		for output_dir in "${output_array[@]}"
+		do
+			data_gather_filename="${matrix_dir%${dir_append}}_${output_dir%${dir_append}}_data.txt"
+			data_plot_filename="${matrix_dir%${dir_append}}_${output_dir%${dir_append}}_plot.png"
+			
+			python ${generate_plots_python} ${data_gather_filename} ${data_plot_filename}
+		done
+	done
+}
+
 # module load mpich-3.2-gcc-4.8.5-7ebkszx
 # mpirun -n ${num_processes} ./example
 
 # ;; vs exit;; (one continues and the other exits)
 
 # OPTIONS
-while getopts "hnptsd" args; do
+while getopts "hnptsdy" args; do
 	case $args in 
 	h)
 		echo "============================================================================================="
@@ -505,6 +527,7 @@ while getopts "hnptsd" args; do
 		echo "  -t  run with Tau tracing"
 		echo "  -s  check the success of running jobs -- check the corresponding output files"
 		echo "  -d  gather all data files to the plots_code dir to generate the plots"
+		echo "  -y  generate the plots after running the -d option"
 		echo " e.g., 'profile.*' files for profiling..."
 		echo "============================================================================================="
 		exit;;
@@ -544,6 +567,12 @@ while getopts "hnptsd" args; do
 		echo "Moving all data files from repart_relax program to plots_code/ for generating the plots..."
 		echo "============================================================================================="
 		gather_data_files
+		exit;;
+	y)
+		echo "============================================================================================="
+		echo "Generate the plots in Python...based on data files copied over for option -d"
+		echo "============================================================================================="
+		generate_plots
 		exit;;
 	\?)
 		echo "============================================================================================="

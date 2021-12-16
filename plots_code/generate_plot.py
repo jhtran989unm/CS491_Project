@@ -3,12 +3,16 @@ import matplotlib.pyplot as plt
 import sys
 
 if __name__ == "__main__":
-    # processes_array = [1, 2, 4, 8, 16, 32]
-    processes_array = [1, 2]
+    processes_array = [1, 2, 4, 8, 16, 32]
+    #processes_array = [1, 2]
     output = []
 
-    data_file = sys.argv[1]  # first argument
-    with open(data_file, "r") as file:
+    data_filename = sys.argv[1]  # first argument
+    data_plot_filename = sys.argv[2]  # second argument
+
+    filename_prefix = data_filename.replace("_data.txt", "")
+
+    with open(data_filename, "r") as file:
         # list_num = list(enumerate(file))
         list_num = [float(line.strip()) for line in file]
         total_num = len(list_num)
@@ -34,17 +38,29 @@ if __name__ == "__main__":
     num_bars = 2
 
     fig = plt.figure()
+
+    # zorder before plotting...
+    plt.gca().set_axisbelow(True)
+    plt.grid(True, axis="y", which="both", linestyle='dotted', zorder=0)
+    # check if the grid looks good...
+
     #ax = fig.add_axes([0, 0, 1, 1])
-    plt.bar(br1, output[0], color='b', width=barWidth, label=f"Hybrid time")
-    plt.bar(br2, output[2], color='g', width=barWidth, label=f"Repartition time")
+    plt.bar(br1, output[0], color='b', width=barWidth, label=f"Hybrid time",
+            log=1, zorder=1)
 
     # changed from br3 -- stack the repartition time with new hybrid time
+    # change so output[3] is on bottom -- new repartitioned hybrid time
     plt.bar(br2, output[3], color='r', width=barWidth, label=f"Repartitioned "
                                                             f"Hybrid time",
-            bottom=output[2])
+            log=1, zorder=1)
+
+    plt.bar(br2, output[2], color='g', width=barWidth, label=f"Repartition "
+                                                             f"time",
+            bottom=output[3], log=1, zorder=1)
+
     plt.xlabel(f"Number of processes")
     plt.ylabel(f"Time (s)")
-    plt.title(f"Some title")
+    plt.title(f"{filename_prefix} Plot")
 
     offset = ((1 / 2) * (num_bars - 1)) * barWidth
     plt.xticks([r + offset for r in range(len(processes_array))],
@@ -52,6 +68,6 @@ if __name__ == "__main__":
 
     plt.legend()
 
-    plt.savefig(f"test_plot.png")
-    plt.show()
+    plt.savefig(f"{data_plot_filename}")
+    #plt.show()
 
