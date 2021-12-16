@@ -100,7 +100,7 @@ if __name__ == "__main__":
     plt.xticks([r + offset for r in range(len(processes_array))],
                processes_array)
 
-    plt.savefig(f"{filename_prefix}_timings_plot.png")
+    plt.savefig(f"{filename_prefix}_timings_plot.png", bbox_inches="tight")
 
     #plt.close(fig)
 
@@ -158,7 +158,7 @@ if __name__ == "__main__":
     plt.xticks([r + offset for r in range(len(processes_array))],
                processes_array)
 
-    plt.savefig(f"{filename_prefix}_residual_plot.png")
+    plt.savefig(f"{filename_prefix}_residual_plot.png", bbox_inches="tight")
 
     #plt.close(fig)
 
