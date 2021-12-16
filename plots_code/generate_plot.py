@@ -61,7 +61,7 @@ if __name__ == "__main__":
     ax.yaxis.grid(True, which="both", color='#EEEEEE', linestyle='dotted')
     ax.xaxis.grid(False)
 
-    #fig.tight_layout()
+    # fig.tight_layout()
 
     # zorder before plotting...
     #ax.set_axisbelow(True)
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     ax.yaxis.grid(True, which="both", color='#EEEEEE', linestyle='dotted')
     ax.xaxis.grid(False)
 
-    #fig.tight_layout()
+    # fig.tight_layout()
 
     # zorder before plotting...
     #ax.set_axisbelow(True)
